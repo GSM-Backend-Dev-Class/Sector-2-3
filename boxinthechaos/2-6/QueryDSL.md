@@ -419,3 +419,22 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom {
     }
 }
 ```
+
+# Q클래스
+Querydsl을 사용하면 기본적으로 QClass라는 자식이 생성된다
+
+이는 엔티티 클래스의 메타 데이터를 가지고 있는 클래스이다
+
+## Q클래스에 관한 의문점
+Entity클래스 앞에 Q를 붙여 생겼고 심지어 Entity랑 별반 다를 것이 없는 Q클래스가 생성되어
+궁금한 점이 있다
+
+1. Q클래스는 어떤 과정으로 만들어 지는 걸까?
+2. Entity사용하면 되는데 굳이 Q클래스를 생성해서 사용하는 이유가 뭘까
+
+- QClass는 컴파일 단계에서 엔티티를 기반으로 생성되며, JPA_APT(JPAAnnotationProcessTool)가 @Entity와 같은 특정 어노테이션을 찾고 해당 클래스를 분석해서 만든다
+- QClass는 엔티티 클래스의 메타 정보를 담고 있는 클래스로, Querydsl은 이를 이용하여 타입 안정성(Type safe)를 보장하며 쿼리를 작성할 수 있게 된다
+- QClass를 사용하여 쿼리를 작성하면 엔티티 속성을 직접 참조하고 조합하여 쿼리를 구성할 수 있다
+- QClass를 사용하면 컴파일 시점에 오류를 확인할 수 있다
+- QClass는 엔티티 속성의 타입을 정확하게 표현하므로, 타입에 맞지 않는 연산이나 비교를 시도하면 컴파일러가 오류를 감지할 수 있다
+- IDE의 자동완성 기능을 활용하여 속성 이름을 직접 기억하지 않고 쿼리 작성을 보다 편리하게 할 수 있다
